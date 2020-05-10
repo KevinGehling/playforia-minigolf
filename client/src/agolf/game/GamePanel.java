@@ -85,7 +85,7 @@ public class GamePanel extends Panel {
             this.gamePlayerInfoPanel.method355(this.playerCount, trackCount, maxStrokes, strokeTimeout, trackScoring);
             this.gameTrackInfoPanel.setNumTracks(trackCount);
             this.gameControlPanel.setPlayerCount(this.playerCount);
-            this.gameCanvas.method132(this.playerCount, waterEvent, collision);
+            this.gameCanvas.initVariables(this.playerCount, waterEvent, collision);
             if (mode == 2) {
                 String settings = "";
                 if (passworded) {

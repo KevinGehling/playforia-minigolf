@@ -36,8 +36,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private double startPointY;
     private double aDouble2819;
     private double aDouble2820;
-    private double[] aDoubleArray2821;
-    private double[] aDoubleArray2822;
+    private double[] multiballStartX;
+    private double[] multiBallStartY;
     private Vector[] aVectorArray2823;
     private Vector[] aVectorArray2824;
     private short[][][] aShortArrayArrayArray2825;
@@ -59,12 +59,6 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private Graphics graphics;
     private Thread aThread2842;
     private boolean aBoolean2843;
-
-    // aimbot stuff
-    final private boolean allowCheating = false;
-    private double hackedX = 0;
-    private double hackedY = 0;
-    private boolean isCheating = false;
 
     protected GameCanvas(GameContainer var1, Image var2) {
         super(var1, var2);
@@ -130,10 +124,6 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
             this.graphics.setColor(aColor2805);
             this.method161(this.graphics, this.currentPlayerID, this.aSynchronizedBoolArray2831[this.currentPlayerID].get() ? 2.1666666666666665D : 0.0D);
-        }
-
-        if (isCheating) {
-            graphics.fillRect((int) (hackedX - 5), (int) (hackedY - 5), 10, 10); // afaik the coords are the centre of ball
         }
 
         g.drawImage(this.wholeCanvas, 0, 0, this);
@@ -575,19 +565,6 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     }
 
     public synchronized void keyPressed(KeyEvent var1) {
-
-        if (allowCheating) {
-            // code for the aimbot.
-            if (var1.getKeyCode() == KeyEvent.VK_C) {
-                isCheating = !isCheating;
-            } else {
-                if (this.gameState == 1) {
-                    this.keyCountMod4 = (this.keyCountMod4 + 1) % 4;
-                    this.repaint();
-                }
-            }
-        }
-
         if (this.gameState == 1) {
             this.keyCountMod4 = (this.keyCountMod4 + 1) % 4;
             this.repaint();
@@ -600,23 +577,23 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     public void keyTyped(KeyEvent var1) {
     }
 
-    protected void method132(int var1, int var2, int var3) {
-        this.kevinPlayerCount = var1;
+    protected void initVariables(int playerCount, int var2, int var3) {
+        this.kevinPlayerCount = playerCount;
         this.anInt2810 = var2;
         this.anInt2811 = var3;
-        this.playerX = new double[var1];
-        this.playerY = new double[var1];
-        this.aDoubleArray2828 = new double[var1];
-        this.aDoubleArray2829 = new double[var1];
-        this.aSynchronizedBoolArray2831 = new SynchronizedBool[var1];
+        this.playerX = new double[playerCount];
+        this.playerY = new double[playerCount];
+        this.aDoubleArray2828 = new double[playerCount];
+        this.aDoubleArray2829 = new double[playerCount];
+        this.aSynchronizedBoolArray2831 = new SynchronizedBool[playerCount];
 
-        for (int var4 = 0; var4 < var1; ++var4) {
+        for (int var4 = 0; var4 < playerCount; ++var4) {
             this.aSynchronizedBoolArray2831[var4] = new SynchronizedBool();
         }
 
-        this.aBooleanArray2830 = new boolean[var1];
-        this.aBooleanArray2834 = new boolean[var1];
-        this.anInt2833 = var1 <= 2 ? 0 : 3;
+        this.aBooleanArray2830 = new boolean[playerCount];
+        this.aBooleanArray2834 = new boolean[playerCount];
+        this.anInt2833 = playerCount <= 2 ? 0 : 3;
     }
 
     protected void drawMap(int var1) {
@@ -653,14 +630,14 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         }
 
         Vector var40 = new Vector();
-        this.aDoubleArray2821 = new double[4];
-        this.aDoubleArray2822 = new double[4];
+        this.multiballStartX = new double[4];
+        this.multiBallStartY = new double[4];
         this.aVectorArray2824 = new Vector[4];
         this.aVectorArray2823 = new Vector[4];
         Vector var41 = new Vector();
 
         for (var10 = 0; var10 < 4; ++var10) {
-            this.aDoubleArray2821[var10] = this.aDoubleArray2822[var10] = -1.0D;
+            this.multiballStartX[var10] = this.multiBallStartY[var10] = -1.0D;
             this.aVectorArray2824[var10] = new Vector();
             this.aVectorArray2823[var10] = new Vector();
         }
@@ -684,8 +661,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                     }
 
                     if (var14 >= 48 && var14 <= 51) {
-                        this.aDoubleArray2821[var14 - 48] = var15;
-                        this.aDoubleArray2822[var14 - 48] = var17;
+                        this.multiballStartX[var14 - 48] = var15;
+                        this.multiBallStartY[var14 - 48] = var17;
                     }
 
                     int var20;
@@ -914,9 +891,9 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
 
     private void method145(int var1, boolean var2) {
-        if (this.aDoubleArray2821[var1] >= 0.0D && this.aDoubleArray2821[var1] >= 0.0D) {
-            this.playerX[var1] = this.aDoubleArray2821[var1];
-            this.playerY[var1] = this.aDoubleArray2822[var1];
+        if (this.multiballStartX[var1] >= 0.0D && this.multiballStartX[var1] >= 0.0D) {
+            this.playerX[var1] = this.multiballStartX[var1];
+            this.playerY[var1] = this.multiBallStartY[var1];
         } else if (this.startPointX >= 0.0D && this.startPointY >= 0.0D) {
             this.playerX[var1] = this.startPointX;
             this.playerY[var1] = this.startPointY;
