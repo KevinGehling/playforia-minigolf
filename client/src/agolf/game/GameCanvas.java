@@ -648,38 +648,42 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         // y = rows, x = columns
         for (int y = 0; y < 25; ++y) {
             for (x = 0; x < 49; ++x) {
-                // i guess handling for ball and hole
-                // 33619968 = hole
-                // 33554432 = ball
+                // handling for startposition of ball (and maybe multiple start positions?)
                 if (super.trackTiles[x][y] / 16777216 == 2) {
+                    // special index
                     int var14 = super.trackTiles[x][y] / 65536 % 256 + 24;
-                    double var15 = (double) (x * 15) + 7.5D;
-                    double var17 = (double) (y * 15) + 7.5D;
+                    double centerX = (double) (x * 15) + 7.5D;
+                    double centerY = (double) (y * 15) + 7.5D;
+                    // default ball
                     if (var14 == 24) {
-                        var19 = new double[]{var15, var17};
+                        var19 = new double[]{centerX, centerY};
                         var40.addElement(var19);
                     }
 
+                    // blue/red/yellow/green ball
                     if (var14 >= 48 && var14 <= 51) {
-                        this.multiballStartX[var14 - 48] = var15;
-                        this.multiBallStartY[var14 - 48] = var17;
+                        this.multiballStartX[var14 - 48] = centerX;
+                        this.multiBallStartY[var14 - 48] = centerY;
                     }
 
                     int var20;
+                    // teleport input (4 arrow icon)
                     if (var14 == 33 || var14 == 35 || var14 == 37 || var14 == 39) {
                         var20 = (var14 - 33) / 2;
-                        var19 = new double[]{var15, var17};
+                        var19 = new double[]{centerX, centerY};
                         this.aVectorArray2824[var20].addElement(var19);
                     }
 
+                    // teleport output (filled icon)
                     if (var14 == 32 || var14 == 34 || var14 == 36 || var14 == 38) {
                         var20 = (var14 - 32) / 2;
-                        var19 = new double[]{var15, var17};
+                        var19 = new double[]{centerX, centerY};
                         this.aVectorArray2823[var20].addElement(var19);
                     }
 
+                    // special arrow field (icon with 4 arrows)
                     if (var14 == 44 || var14 == 45) {
-                        int[] var43 = new int[]{(int) (var15 + 0.5D), (int) (var17 + 0.5D), var14};
+                        int[] var43 = new int[]{(int) (centerX + 0.5D), (int) (centerY + 0.5D), var14};
                         var41.addElement(var43);
                     }
                 }
