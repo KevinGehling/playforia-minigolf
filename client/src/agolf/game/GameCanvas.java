@@ -8,7 +8,6 @@ import com.aapeli.tools.Tools;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -25,7 +24,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private static final Color backgroundColour = new Color(19, 167, 19);
     private int gameState;
     private Image[] anImageArray2808;
-    private int anInt2809;
+    private int kevinPlayerCount;
     private int anInt2810;
     private int anInt2811;
     private int currentPlayerID;
@@ -33,8 +32,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private int mouseY;
     private int keyCountMod4;
     private int anInt2816;
-    private double aDouble2817;
-    private double aDouble2818;
+    private double startPointX;
+    private double startPointY;
     private double aDouble2819;
     private double aDouble2820;
     private double[] aDoubleArray2821;
@@ -56,7 +55,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private static int[] anIntArray2837 = new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE};
     private static int anInt2838 = 2;
     private int anInt2839;
-    private Image anImage2840;
+    private Image wholeCanvas;
     private Graphics graphics;
     private Thread aThread2842;
     private boolean aBoolean2843;
@@ -70,26 +69,27 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     protected GameCanvas(GameContainer var1, Image var2) {
         super(var1, var2);
         this.anImageArray2808 = var1.spriteManager.getBalls();
-        this.anInt2809 = this.currentPlayerID = this.mouseX = this.mouseY = -1;
+        this.kevinPlayerCount = this.currentPlayerID = this.mouseX = this.mouseY = -1;
         this.anInt2833 = 0;
         this.gameState = 0;
         this.anInt2839 = anInt2838;
     }
 
     public void update(Graphics g) {
-        if (this.anImage2840 == null) {
-            this.anImage2840 = this.createImage(735, 375);
-            this.graphics = this.anImage2840.getGraphics();
+        if (this.wholeCanvas == null) {
+            this.wholeCanvas = this.createImage(735, 375);
+            this.graphics = this.wholeCanvas.getGraphics();
         }
 
         super.update(this.graphics);
         if (this.gameState == 1 && this.mouseX > -1 && this.mouseY > -1) {
-            double[] var2 = this.method146(this.currentPlayerID, this.mouseX, this.mouseY);
+            double[] var2 = this.caculateStrokeEnding(this.currentPlayerID, this.mouseX, this.mouseY);
             int var3 = (int) (this.playerX[this.currentPlayerID] + 0.5D);
             int var4 = (int) (this.playerY[this.currentPlayerID] + 0.5D);
             int var5 = (int) (this.playerX[this.currentPlayerID] + var2[0] * 200.0D / 6.5D + 0.5D);
             int var6 = (int) (this.playerY[this.currentPlayerID] + var2[1] * 200.0D / 6.5D + 0.5D);
             this.graphics.setColor(colourAimLine);
+            // draw user input (ball to mouse)
             if (this.keyCountMod4 == 0) {
                 this.graphics.drawLine(var3, var4, var5, var6);
             } else {
@@ -122,7 +122,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             this.graphics.setFont(aFont2803);
             this.graphics.setColor(aColor2804);
 
-            for (int var10 = 0; var10 < this.anInt2809; ++var10) {
+            for (int var10 = 0; var10 < this.kevinPlayerCount; ++var10) {
                 if (this.aBooleanArray2830[var10] && var10 != this.currentPlayerID) {
                     this.method161(this.graphics, var10, this.aSynchronizedBoolArray2831[var10].get() ? 2.1666666666666665D : 0.0D);
                 }
@@ -136,7 +136,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             graphics.fillRect((int) (hackedX - 5), (int) (hackedY - 5), 10, 10); // afaik the coords are the centre of ball
         }
 
-        g.drawImage(this.anImage2840, 0, 0, this);
+        g.drawImage(this.wholeCanvas, 0, 0, this);
     }
 
     public void run() {
@@ -147,21 +147,21 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         var3.drawImage(var2, 0, 0, this);
         var4.drawImage(var1, 0, 0, this);
         int var5 = 0;
-        int[] var6 = new int[this.anInt2809];
-        int[] var7 = new int[this.anInt2809];
-        double[] var8 = new double[this.anInt2809];
-        double[] var9 = new double[this.anInt2809];
-        double[] var10 = new double[this.anInt2809];
-        double[] var11 = new double[this.anInt2809];
-        double[] var12 = new double[this.anInt2809];
-        double[] var13 = new double[this.anInt2809];
-        double[] var14 = new double[this.anInt2809];
-        boolean[] var15 = new boolean[this.anInt2809];
-        boolean[] var16 = new boolean[this.anInt2809];
-        boolean[] var17 = new boolean[this.anInt2809];
-        int[] var18 = new int[this.anInt2809];
+        int[] var6 = new int[this.kevinPlayerCount];
+        int[] var7 = new int[this.kevinPlayerCount];
+        double[] var8 = new double[this.kevinPlayerCount];
+        double[] var9 = new double[this.kevinPlayerCount];
+        double[] var10 = new double[this.kevinPlayerCount];
+        double[] var11 = new double[this.kevinPlayerCount];
+        double[] var12 = new double[this.kevinPlayerCount];
+        double[] var13 = new double[this.kevinPlayerCount];
+        double[] var14 = new double[this.kevinPlayerCount];
+        boolean[] var15 = new boolean[this.kevinPlayerCount];
+        boolean[] var16 = new boolean[this.kevinPlayerCount];
+        boolean[] var17 = new boolean[this.kevinPlayerCount];
+        int[] var18 = new int[this.kevinPlayerCount];
 
-        for (int var19 = 0; var19 < this.anInt2809; ++var19) {
+        for (int var19 = 0; var19 < this.kevinPlayerCount; ++var19) {
             var6[var19] = var7[var19] = 0;
             var8[var19] = var11[var19] = this.playerX[var19];
             var9[var19] = var12[var19] = this.playerY[var19];
@@ -198,7 +198,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         do {
             long var39 = System.currentTimeMillis();
 
-            for (int var41 = 0; var41 < this.anInt2809; ++var41) {
+            for (int var41 = 0; var41 < this.kevinPlayerCount; ++var41) {
                 var13[var41] = this.playerX[var41];
                 var14[var41] = this.playerY[var41];
             }
@@ -208,7 +208,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             for (int var42 = 0; var42 < this.anInt2839; ++var42) {
                 var24 = 0;
 
-                for (var43 = 0; var43 < this.anInt2809; ++var43) {
+                for (var43 = 0; var43 < this.kevinPlayerCount; ++var43) {
                     if (this.aBooleanArray2830[var43] && !this.aSynchronizedBoolArray2831[var43].get()) {
                         for (var44 = 0; var44 < 10; ++var44) {
                             this.playerX[var43] += this.aDoubleArray2828[var43] * 0.1D;
@@ -231,7 +231,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
                             int var45;
                             if (this.anInt2811 == 1 && !var15[var43] && !var16[var43]) {
-                                for (var45 = 0; var45 < this.anInt2809; ++var45) {
+                                for (var45 = 0; var45 < this.kevinPlayerCount; ++var45) {
                                     if (var43 != var45 && this.aBooleanArray2830[var45] && !this.aSynchronizedBoolArray2831[var45].get() && !var15[var45] && !var16[var45] && this.method147(var43, var45)) {
                                         this.aDoubleArray2828[var43] *= 0.75D;
                                         this.aDoubleArray2829[var43] *= 0.75D;
@@ -424,7 +424,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             if (var15[var43] && var10[var43] > 2.1666666666666665D || var16[var43] && var10[var43] > 6.0D) {
                                 if (var33 == 25) {
                                     this.aSynchronizedBoolArray2831[var43].set(true);
-                                    if (this.aBoolean2832 && this.anInt2809 > 1) {
+                                    if (this.aBoolean2832 && this.kevinPlayerCount > 1) {
                                         super.gameContainer.gamePanel.hideSkipButton();
                                     }
                                 } else {
@@ -450,12 +450,12 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 }
 
                 ++var5;
-                if (var24 >= this.anInt2809) {
+                if (var24 >= this.kevinPlayerCount) {
                     var42 = this.anInt2839;
                 }
             }
 
-            for (var43 = 0; var43 < this.anInt2809; ++var43) {
+            for (var43 = 0; var43 < this.kevinPlayerCount; ++var43) {
                 if (this.aBooleanArray2830[var43]) {
                     int var54 = (int) (var13[var43] - 6.5D + 0.5D);
                     int var55 = (int) (var14[var43] - 6.5D + 0.5D);
@@ -463,7 +463,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                     int var57 = var55 + 13;
                     var3.drawImage(var2, var54, var55, var56, var57, var54, var55, var56, var57, this);
 
-                    for (var44 = 0; var44 < this.anInt2809; ++var44) {
+                    for (var44 = 0; var44 < this.kevinPlayerCount; ++var44) {
                         if (this.aBooleanArray2830[var44] && var44 != this.currentPlayerID) {
                             this.method161(var3, var44, var10[var44]);
                         }
@@ -502,7 +502,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
             Tools.sleep(var58);
             var38 = (int) ((long) var38 + var58);
-        } while (var24 < this.anInt2809 && !this.aBoolean2843);
+        } while (var24 < this.kevinPlayerCount && !this.aBoolean2843);
 
         if (this.aBoolean2843) {
             this.aThread2842 = null;
@@ -521,19 +521,6 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     public void mouseMoved(MouseEvent var1) {
         this.mouseX = var1.getX();
         this.mouseY = var1.getY();
-
-        if (isCheating) {
-            int x = this.mouseX;
-            int y = this.mouseY;
-            double subtractionX = this.playerX[this.currentPlayerID] - (double) x;
-            double subtractionY = this.playerY[this.currentPlayerID] - (double) y;
-            if (Math.sqrt(subtractionX * subtractionX + subtractionY * subtractionY) >= 6.5D) {
-                this.doHackedStroke(this.currentPlayerID, true, x, y, this.keyCountMod4);
-                this.repaint();
-            }
-        }
-
-
         this.repaint();
     }
 
@@ -614,7 +601,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     }
 
     protected void method132(int var1, int var2, int var3) {
-        this.anInt2809 = var1;
+        this.kevinPlayerCount = var1;
         this.anInt2810 = var2;
         this.anInt2811 = var3;
         this.playerX = new double[var1];
@@ -681,8 +668,12 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         int x;
         double[] var19;
         // Iterates over the 49*25 map
+        // y = rows, x = columns
         for (int y = 0; y < 25; ++y) {
             for (x = 0; x < 49; ++x) {
+                // i guess handling for ball and hole
+                // 33619968 = hole
+                // 33554432 = ball
                 if (super.trackTiles[x][y] / 16777216 == 2) {
                     int var14 = super.trackTiles[x][y] / 65536 % 256 + 24;
                     double var15 = (double) (x * 15) + 7.5D;
@@ -720,11 +711,11 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
         x = var40.size();
         if (x == 0) {
-            this.aDouble2817 = this.aDouble2818 = -1.0D;
+            this.startPointX = this.startPointY = -1.0D;
         } else {
             var19 = (double[]) var40.elementAt(var3 % x);
-            this.aDouble2817 = var19[0];
-            this.aDouble2818 = var19[1];
+            this.startPointX = var19[0];
+            this.startPointY = var19[1];
         }
 
         int var42 = var41.size();
@@ -782,7 +773,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             }
         }
 
-        for (int var39 = 0; var39 < this.anInt2809; ++var39) {
+        for (int var39 = 0; var39 < this.kevinPlayerCount; ++var39) {
             this.aBooleanArray2834[var39] = true;
             this.method145(var39, true);
             this.aSynchronizedBoolArray2831[var39].set(false);
@@ -887,7 +878,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
     private void doStroke(int playerId, boolean isLocalPlayer, int mouseX, int mouseY, int mod) {
         this.anInt2816 = super.gameContainer.gamePanel.isValidPlayerID(playerId) ? playerId : -1;
-        double[] var6 = this.method146(playerId, mouseX, mouseY);
+        double[] var6 = this.caculateStrokeEnding(playerId, mouseX, mouseY);
         this.aDoubleArray2828[playerId] = var6[0];
         this.aDoubleArray2829[playerId] = var6[1];
         if (mod == 1) {
@@ -921,73 +912,14 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         this.aThread2842.start();
     }
 
-    private void doHackedStroke(int playerId, boolean isLocalPlayer, int mouseX, int mouseY, int mod) {
-        double[] temp_aDoubleArray2828 = Arrays.copyOf(aDoubleArray2828, aDoubleArray2828.length);
-        double[] temp_aDoubleArray2829 = Arrays.copyOf(aDoubleArray2829, aDoubleArray2829.length);
-        boolean temp_aBoolean2832 = this.aBoolean2832;
-        boolean temp_aBoolean2843 = this.aBoolean2843;
-        Seed temp_aSeed_2836 = aSeed_2836.clone();
-       // int temp_anInt2816 = super.gameContainer.gamePanel.isValidPlayerID(playerId) ? playerId : -1;
-       int temp_anInt2816 = playerId;
-
-        double[] var6 = method146(playerId, mouseX, mouseY);
-        temp_aDoubleArray2828[playerId] = var6[0];
-        temp_aDoubleArray2829[playerId] = var6[1];
-        if (mod == 1) {
-            temp_aDoubleArray2828[playerId] = -temp_aDoubleArray2828[playerId];
-            temp_aDoubleArray2829[playerId] = -temp_aDoubleArray2829[playerId];
-        }
-
-        double var7;
-        if (mod == 2) {
-            var7 = temp_aDoubleArray2828[playerId];
-            temp_aDoubleArray2828[playerId] = temp_aDoubleArray2829[playerId];
-            temp_aDoubleArray2829[playerId] = -var7;
-        }
-
-        if (mod == 3) {
-            var7 = temp_aDoubleArray2828[playerId];
-            temp_aDoubleArray2828[playerId] = -temp_aDoubleArray2829[playerId];
-            temp_aDoubleArray2829[playerId] = var7;
-        }
-
-        var7 = Math.sqrt(temp_aDoubleArray2828[playerId] * temp_aDoubleArray2828[playerId] + temp_aDoubleArray2829[playerId] * temp_aDoubleArray2829[playerId]);
-        double var9 = var7 / 6.5D;
-        var9 *= var9;
-        temp_aDoubleArray2828[playerId] += var9 * ((double) (temp_aSeed_2836.next() % '\uc351') / 100000.0D - 0.25D);
-        temp_aDoubleArray2829[playerId] += var9 * ((double) (temp_aSeed_2836.next() % '\uc351') / 100000.0D - 0.25D);
-        temp_aBoolean2832 = isLocalPlayer;
-        //this.gameState = 2;
-        temp_aBoolean2843 = false;
-
-
-        HackedShot hs = new HackedShot(anInt2809, anInt2810, anInt2811, currentPlayerID, temp_anInt2816,
-                aDouble2817, aDouble2818, aDouble2819, aDouble2820, aDoubleArray2821, aDoubleArray2822,
-                aVectorArray2823, aVectorArray2824, aShortArrayArrayArray2825, playerX, playerY, temp_aDoubleArray2828,
-                temp_aDoubleArray2829, aBooleanArray2830, aSynchronizedBoolArray2831, temp_aBoolean2832, aBooleanArray2834,
-                temp_aSeed_2836, anInt2839, temp_aBoolean2843, super.isSolidArrayIThink, super.trackTiles);
-        Thread hack = new Thread(hs);
-        hack.start();
-        try {
-            hack.join();
-        } catch (Exception e) {
-
-        }
-        double[] coords = hs.getHackedCoordintes();
-        hackedX = coords[0];
-        hackedY = coords[1];
-        hs = null;
-        hack = null;
-    }
-
 
     private void method145(int var1, boolean var2) {
         if (this.aDoubleArray2821[var1] >= 0.0D && this.aDoubleArray2821[var1] >= 0.0D) {
             this.playerX[var1] = this.aDoubleArray2821[var1];
             this.playerY[var1] = this.aDoubleArray2822[var1];
-        } else if (this.aDouble2817 >= 0.0D && this.aDouble2818 >= 0.0D) {
-            this.playerX[var1] = this.aDouble2817;
-            this.playerY[var1] = this.aDouble2818;
+        } else if (this.startPointX >= 0.0D && this.startPointY >= 0.0D) {
+            this.playerX[var1] = this.startPointX;
+            this.playerY[var1] = this.startPointY;
             if (var2) {
                 this.aBooleanArray2834[var1] = false;
             }
@@ -998,9 +930,14 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         }
     }
 
-    private double[] method146(int playerId, int mouseX, int mouseY) {
+    // calculate stroke ending for mouseX and mouseY
+    private double[] caculateStrokeEnding(int playerId, int mouseX, int mouseY) {
+        System.out.println("mouseX: " + mouseX);
+        System.out.println("mouseY: " + mouseY);
         double subX = this.playerX[playerId] - (double) mouseX;
         double subY = this.playerY[playerId] - (double) mouseY;
+        System.out.println("subX: " + subX);
+        System.out.println("subY: " + subY);
         double sqrtXY = Math.sqrt(subX * subX + subY * subY);
         double var10 = (sqrtXY - 5.0D) / 30.0D;
         if (var10 < 0.075D) {
@@ -1449,7 +1386,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             int var4 = super.trackTiles[var1][var2] / 65536 % 256;
             int var5 = super.trackTiles[var1][var2] / 256 % 256;
             if (var3 == 1 && var4 == 0 && var5 <= 15) {
-                for (int var6 = 0; var6 < this.anInt2809; ++var6) {
+                for (int var6 = 0; var6 < this.kevinPlayerCount; ++var6) {
                     if (this.playerX[var6] > (double) (var1 * 15) && this.playerX[var6] < (double) (var1 * 15 + 15 - 1) && this.playerY[var6] > (double) (var2 * 15) && this.playerY[var6] < (double) (var2 * 15 + 15 - 1)) {
                         return -1;
                     }
@@ -1538,7 +1475,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
         if (var3 == 0.0D) {
             g.drawImage(this.anImageArray2808[playerid + var8], var5, var6, this);
-            if (this.anInt2833 > 0 && this.aBooleanArray2834[playerid] && this.gameState != 2 && this.anInt2809 > 1) {
+            if (this.anInt2833 > 0 && this.aBooleanArray2834[playerid] && this.gameState != 2 && this.kevinPlayerCount > 1) {
                 String[] var9 = super.gameContainer.gamePanel.getPlayerInfo(playerid);
                 if (this.anInt2833 == 1) {
                     StringDraw.drawString(g, var9[0].substring(0, 1), var5 + 6, var6 + 13 - 3, 0);

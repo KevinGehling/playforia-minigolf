@@ -1,50 +1,27 @@
 package org.moparforia.shared;
 
-import com.github.jmkgreen.morphia.annotations.Entity;
-import com.github.jmkgreen.morphia.annotations.Id;
-import com.github.jmkgreen.morphia.annotations.Property;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import org.bson.types.ObjectId;
 
 import java.util.Arrays;
 
 /**
  * track shit
  */
-@Entity(value="tracks", noClassnameStored=true)
 public class Track {
 
-    @Id
-    public ObjectId id;
-
-    @Property("name")
     private String trackName;
-    @Property("author")
     private String author;
-    @Property("data")
     private String trackData;
-    @Property("category")
     private int category;
 
-    @Property("num_completions")
     private int totalNumberOfAttempts;
-    @Property("num_strokes")
     private int totalStrokes;
-    @Property("num_best_strokes")
     private int bestPar;
-    @Property("num_best_players")
     private int numberOfBestPar;
 
-    @Property("first_best_name")
     private String firstBestPlayer;
-    @Property("first_best_time")
     private long firstBestTime;
-    @Property("last_best_name")
     private String lastBestPlayer;
-    @Property("last_best_time")
     private long lastBestTime;
-    @Property("ratings")
     private int[] ratings;
 
     /**
@@ -89,46 +66,12 @@ public class Track {
                 new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
     }
 
-    public static Track fromDb(BasicDBObject object) throws Exception{
-        String name = object.getString("name");
-        String author = object.getString("author");
-        int category;
-        try {
-            category = object.getInt("category");
-        } catch (Exception e) {
-            category = 7;
-        }
-        String data = object.getString("data");
-
-        int numCompletions = object.getInt("num_completions");
-        int numAttempts = object.getInt("num_strokes");
-        int bestPar = object.getInt("num_best_strokes");
-        int numBestPar = object.getInt("num_best_players");
-
-        int[] scoreInfo = new int[]{numCompletions, numAttempts, bestPar, numBestPar};
-
-        String firstBestPlayer = object.getString("first_best_name");
-        String lastBestPlayer = object.getString("last_best_name");
-        String[] bestPlayers = new String[]{firstBestPlayer, lastBestPlayer};
-
-        long firstBestTime = object.getLong("first_best_time");
-        long lastBestTime = object.getLong("last_best_time");
-        long[] bestTimes = new long[]{firstBestTime, lastBestTime};
-
-        BasicDBList ratings = (BasicDBList) object.get("ratings");
-        return new Track(name, author, data, category, scoreInfo, bestPlayers, bestTimes, Tools.toIntArray(ratings));
-    }
-
 
     /**
      * new Track(1,"Boats and hoes","fc","B3A48DE48DE48DE48DE48DE48DEBAQQ46D3EG13DEG14DEG13D5E13DEE14DEE13D5E13DEE14DEE13D5E13DEE14DEE13D5E13DEE6DBMAQE6DEE13D5ECAAE11DEE6DBAQQE6DEE11DCBA6E13DBOAQE6DEE6DBOAQE13D5E21DEE21D5E21DEE21D5E21DEE21D5E21DEE21D4E46DEE48DE48DE48DE48DE48DE48D",
      * new int[]{2629492,7166639,2,1191141},new String[] {"fc","Tiikoni"}, new int[]{1034197200000,1370170660930},
      * new int[]{1630,567,647,835,1148,3945,3755,3346,2924,2672,21566});
      */
-
-    public ObjectId getId() {
-        return id;
-    }
 
     public String getName() {
         return trackName;

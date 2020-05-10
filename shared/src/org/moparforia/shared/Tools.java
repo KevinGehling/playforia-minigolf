@@ -1,7 +1,5 @@
 package org.moparforia.shared;
 
-import com.mongodb.BasicDBList;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,11 +39,4 @@ public class Tools {
         return izer(",", args);
     }
 
-    public static int[] toIntArray(BasicDBList list)  {
-        int[] ret = new int[list.size()];
-        int i = 0;
-        for (Object e : list)
-            ret[i++] = (Integer) e;
-        return ret;
-    }
 }
