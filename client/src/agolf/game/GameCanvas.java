@@ -24,7 +24,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private static final Color backgroundColour = new Color(19, 167, 19);
     private int gameState;
     private Image[] anImageArray2808;
-    private int kevinPlayerCount;
+    private int playerCount;
     private int anInt2810;
     private int anInt2811;
     private int currentPlayerID;
@@ -63,7 +63,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     protected GameCanvas(GameContainer var1, Image var2) {
         super(var1, var2);
         this.anImageArray2808 = var1.spriteManager.getBalls();
-        this.kevinPlayerCount = this.currentPlayerID = this.mouseX = this.mouseY = -1;
+        this.playerCount = this.currentPlayerID = this.mouseX = this.mouseY = -1;
         this.anInt2833 = 0;
         this.gameState = 0;
         this.anInt2839 = anInt2838;
@@ -78,6 +78,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         super.update(this.graphics);
         if (this.gameState == 1 && this.mouseX > -1 && this.mouseY > -1) {
             double[] var2 = this.caculateStrokeEnding(this.currentPlayerID, this.mouseX, this.mouseY);
+            // (int) with +0.5D <=> round to next int
             int var3 = (int) (this.playerX[this.currentPlayerID] + 0.5D);
             int var4 = (int) (this.playerY[this.currentPlayerID] + 0.5D);
             int var5 = (int) (this.playerX[this.currentPlayerID] + var2[0] * 200.0D / 6.5D + 0.5D);
@@ -116,14 +117,14 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             this.graphics.setFont(aFont2803);
             this.graphics.setColor(aColor2804);
 
-            for (int var10 = 0; var10 < this.kevinPlayerCount; ++var10) {
+            for (int var10 = 0; var10 < this.playerCount; ++var10) {
                 if (this.aBooleanArray2830[var10] && var10 != this.currentPlayerID) {
-                    this.method161(this.graphics, var10, this.aSynchronizedBoolArray2831[var10].get() ? 2.1666666666666665D : 0.0D);
+                    this.drawBall(this.graphics, var10, this.aSynchronizedBoolArray2831[var10].get() ? 2.1666666666666665D : 0.0D);
                 }
             }
 
             this.graphics.setColor(aColor2805);
-            this.method161(this.graphics, this.currentPlayerID, this.aSynchronizedBoolArray2831[this.currentPlayerID].get() ? 2.1666666666666665D : 0.0D);
+            this.drawBall(this.graphics, this.currentPlayerID, this.aSynchronizedBoolArray2831[this.currentPlayerID].get() ? 2.1666666666666665D : 0.0D);
         }
 
         g.drawImage(this.wholeCanvas, 0, 0, this);
@@ -137,21 +138,21 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         var3.drawImage(var2, 0, 0, this);
         var4.drawImage(var1, 0, 0, this);
         int var5 = 0;
-        int[] var6 = new int[this.kevinPlayerCount];
-        int[] var7 = new int[this.kevinPlayerCount];
-        double[] var8 = new double[this.kevinPlayerCount];
-        double[] var9 = new double[this.kevinPlayerCount];
-        double[] var10 = new double[this.kevinPlayerCount];
-        double[] var11 = new double[this.kevinPlayerCount];
-        double[] var12 = new double[this.kevinPlayerCount];
-        double[] var13 = new double[this.kevinPlayerCount];
-        double[] var14 = new double[this.kevinPlayerCount];
-        boolean[] var15 = new boolean[this.kevinPlayerCount];
-        boolean[] var16 = new boolean[this.kevinPlayerCount];
-        boolean[] var17 = new boolean[this.kevinPlayerCount];
-        int[] var18 = new int[this.kevinPlayerCount];
+        int[] var6 = new int[this.playerCount];
+        int[] var7 = new int[this.playerCount];
+        double[] var8 = new double[this.playerCount];
+        double[] var9 = new double[this.playerCount];
+        double[] var10 = new double[this.playerCount];
+        double[] var11 = new double[this.playerCount];
+        double[] var12 = new double[this.playerCount];
+        double[] var13 = new double[this.playerCount];
+        double[] var14 = new double[this.playerCount];
+        boolean[] var15 = new boolean[this.playerCount];
+        boolean[] var16 = new boolean[this.playerCount];
+        boolean[] var17 = new boolean[this.playerCount];
+        int[] var18 = new int[this.playerCount];
 
-        for (int var19 = 0; var19 < this.kevinPlayerCount; ++var19) {
+        for (int var19 = 0; var19 < this.playerCount; ++var19) {
             var6[var19] = var7[var19] = 0;
             var8[var19] = var11[var19] = this.playerX[var19];
             var9[var19] = var12[var19] = this.playerY[var19];
@@ -188,7 +189,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         do {
             long var39 = System.currentTimeMillis();
 
-            for (int var41 = 0; var41 < this.kevinPlayerCount; ++var41) {
+            for (int var41 = 0; var41 < this.playerCount; ++var41) {
                 var13[var41] = this.playerX[var41];
                 var14[var41] = this.playerY[var41];
             }
@@ -198,7 +199,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             for (int var42 = 0; var42 < this.anInt2839; ++var42) {
                 var24 = 0;
 
-                for (var43 = 0; var43 < this.kevinPlayerCount; ++var43) {
+                for (var43 = 0; var43 < this.playerCount; ++var43) {
                     if (this.aBooleanArray2830[var43] && !this.aSynchronizedBoolArray2831[var43].get()) {
                         for (var44 = 0; var44 < 10; ++var44) {
                             this.playerX[var43] += this.aDoubleArray2828[var43] * 0.1D;
@@ -221,7 +222,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
                             int var45;
                             if (this.anInt2811 == 1 && !var15[var43] && !var16[var43]) {
-                                for (var45 = 0; var45 < this.kevinPlayerCount; ++var45) {
+                                for (var45 = 0; var45 < this.playerCount; ++var45) {
                                     if (var43 != var45 && this.aBooleanArray2830[var45] && !this.aSynchronizedBoolArray2831[var45].get() && !var15[var45] && !var16[var45] && this.method147(var43, var45)) {
                                         this.aDoubleArray2828[var43] *= 0.75D;
                                         this.aDoubleArray2829[var43] *= 0.75D;
@@ -414,7 +415,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             if (var15[var43] && var10[var43] > 2.1666666666666665D || var16[var43] && var10[var43] > 6.0D) {
                                 if (var33 == 25) {
                                     this.aSynchronizedBoolArray2831[var43].set(true);
-                                    if (this.aBoolean2832 && this.kevinPlayerCount > 1) {
+                                    if (this.aBoolean2832 && this.playerCount > 1) {
                                         super.gameContainer.gamePanel.hideSkipButton();
                                     }
                                 } else {
@@ -440,12 +441,12 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 }
 
                 ++var5;
-                if (var24 >= this.kevinPlayerCount) {
+                if (var24 >= this.playerCount) {
                     var42 = this.anInt2839;
                 }
             }
 
-            for (var43 = 0; var43 < this.kevinPlayerCount; ++var43) {
+            for (var43 = 0; var43 < this.playerCount; ++var43) {
                 if (this.aBooleanArray2830[var43]) {
                     int var54 = (int) (var13[var43] - 6.5D + 0.5D);
                     int var55 = (int) (var14[var43] - 6.5D + 0.5D);
@@ -453,13 +454,13 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                     int var57 = var55 + 13;
                     var3.drawImage(var2, var54, var55, var56, var57, var54, var55, var56, var57, this);
 
-                    for (var44 = 0; var44 < this.kevinPlayerCount; ++var44) {
+                    for (var44 = 0; var44 < this.playerCount; ++var44) {
                         if (this.aBooleanArray2830[var44] && var44 != this.currentPlayerID) {
-                            this.method161(var3, var44, var10[var44]);
+                            this.drawBall(var3, var44, var10[var44]);
                         }
                     }
 
-                    this.method161(var3, this.currentPlayerID, var10[this.currentPlayerID]);
+                    this.drawBall(var3, this.currentPlayerID, var10[this.currentPlayerID]);
                     if (this.playerX[var43] < var13[var43]) {
                         var54 = (int) (this.playerX[var43] - 6.5D + 0.5D);
                     }
@@ -492,7 +493,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
             Tools.sleep(var58);
             var38 = (int) ((long) var38 + var58);
-        } while (var24 < this.kevinPlayerCount && !this.aBoolean2843);
+        } while (var24 < this.playerCount && !this.aBoolean2843);
 
         if (this.aBoolean2843) {
             this.aThread2842 = null;
@@ -578,7 +579,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     }
 
     protected void initVariables(int playerCount, int var2, int var3) {
-        this.kevinPlayerCount = playerCount;
+        this.playerCount = playerCount;
         this.anInt2810 = var2;
         this.anInt2811 = var3;
         this.playerX = new double[playerCount];
@@ -754,7 +755,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             }
         }
 
-        for (int var39 = 0; var39 < this.kevinPlayerCount; ++var39) {
+        for (int var39 = 0; var39 < this.playerCount; ++var39) {
             this.aBooleanArray2834[var39] = true;
             this.method145(var39, true);
             this.aSynchronizedBoolArray2831[var39].set(false);
@@ -1367,7 +1368,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             int var4 = super.trackTiles[var1][var2] / 65536 % 256;
             int var5 = super.trackTiles[var1][var2] / 256 % 256;
             if (var3 == 1 && var4 == 0 && var5 <= 15) {
-                for (int var6 = 0; var6 < this.kevinPlayerCount; ++var6) {
+                for (int var6 = 0; var6 < this.playerCount; ++var6) {
                     if (this.playerX[var6] > (double) (var1 * 15) && this.playerX[var6] < (double) (var1 * 15 + 15 - 1) && this.playerY[var6] > (double) (var2 * 15) && this.playerY[var6] < (double) (var2 * 15 + 15 - 1)) {
                         return -1;
                     }
@@ -1439,7 +1440,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         var4.drawImage(tile, tileX * 15, tileY * 15, this);
     }
 
-    private void method161(Graphics g, int playerid, double var3) {
+    private void drawBall(Graphics g, int playerid, double var3) {
+        // -6,5 and 13pixel smells like ball
         int var5 = (int) (this.playerX[playerid] - 6.5D + 0.5D);
         int var6 = (int) (this.playerY[playerid] - 6.5D + 0.5D);
         int var7 = 13;
@@ -1456,7 +1458,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
         if (var3 == 0.0D) {
             g.drawImage(this.anImageArray2808[playerid + var8], var5, var6, this);
-            if (this.anInt2833 > 0 && this.aBooleanArray2834[playerid] && this.gameState != 2 && this.kevinPlayerCount > 1) {
+            if (this.anInt2833 > 0 && this.aBooleanArray2834[playerid] && this.gameState != 2 && this.playerCount > 1) {
                 String[] var9 = super.gameContainer.gamePanel.getPlayerInfo(playerid);
                 if (this.anInt2833 == 1) {
                     StringDraw.drawString(g, var9[0].substring(0, 1), var5 + 6, var6 + 13 - 3, 0);
