@@ -23,7 +23,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private static final Color aColor2805 = Color.white;
     private static final Color backgroundColour = new Color(19, 167, 19);
     private int gameState;
-    private Image[] anImageArray2808;
+    private Image[] ballSprites;
     private int playerCount;
     private int anInt2810;
     private int anInt2811;
@@ -48,7 +48,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private boolean[] aBooleanArray2830;
     private SynchronizedBool[] aSynchronizedBoolArray2831;
     private boolean aBoolean2832;
-    private int anInt2833;
+    // what is displayed right next to the ball (hide, initials, full name, clan)
+    private int showPlayerNameState;
     private boolean[] aBooleanArray2834;
     private String aString2835;
     private Seed aSeed_2836;
@@ -62,9 +63,9 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
     protected GameCanvas(GameContainer var1, Image var2) {
         super(var1, var2);
-        this.anImageArray2808 = var1.spriteManager.getBalls();
+        this.ballSprites = var1.spriteManager.getBalls();
         this.playerCount = this.currentPlayerID = this.mouseX = this.mouseY = -1;
-        this.anInt2833 = 0;
+        this.showPlayerNameState = 0;
         this.gameState = 0;
         this.anInt2839 = anInt2838;
     }
@@ -594,7 +595,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
         this.aBooleanArray2830 = new boolean[playerCount];
         this.aBooleanArray2834 = new boolean[playerCount];
-        this.anInt2833 = playerCount <= 2 ? 0 : 3;
+        this.showPlayerNameState = playerCount <= 2 ? 0 : 3;
     }
 
     protected void drawMap(int var1) {
@@ -808,7 +809,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     }
 
     protected void method139(int var1) {
-        this.anInt2833 = var1;
+        this.showPlayerNameState = var1;
         this.repaint();
     }
 
@@ -1457,17 +1458,17 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         }
 
         if (var3 == 0.0D) {
-            g.drawImage(this.anImageArray2808[playerid + var8], var5, var6, this);
-            if (this.anInt2833 > 0 && this.aBooleanArray2834[playerid] && this.gameState != 2 && this.playerCount > 1) {
+            g.drawImage(this.ballSprites[playerid + var8], var5, var6, this);
+            if (this.showPlayerNameState > 0 && this.aBooleanArray2834[playerid] && this.gameState != 2 && this.playerCount > 1) {
                 String[] var9 = super.gameContainer.gamePanel.getPlayerInfo(playerid);
-                if (this.anInt2833 == 1) {
+                if (this.showPlayerNameState == 1) {
                     StringDraw.drawString(g, var9[0].substring(0, 1), var5 + 6, var6 + 13 - 3, 0);
                     return;
                 }
 
                 int var10 = StringDraw.getStringWidth(g, var9[0]);
                 int var11 = var5 + 13 + 2;
-                if (this.anInt2833 != 2 && var9[1] != null) {
+                if (this.showPlayerNameState != 2 && var9[1] != null) {
                     String var12 = "[" + var9[1] + "]";
                     int var13 = StringDraw.getStringWidth(g, var12);
                     byte var14 = -1;
@@ -1489,7 +1490,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 return;
             }
         } else {
-            g.drawImage(this.anImageArray2808[playerid + var8], var5, var6, var5 + var7, var6 + var7, 0, 0, 13, 13, this);
+            g.drawImage(this.ballSprites[playerid + var8], var5, var6, var5 + var7, var6 + var7, 0, 0, 13, 13, this);
         }
 
     }
