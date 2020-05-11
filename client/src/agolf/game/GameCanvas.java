@@ -117,9 +117,9 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             this.graphics.setFont(aFont2803);
             this.graphics.setColor(aColor2804);
 
-            for (int var10 = 0; var10 < this.playerCount; ++var10) {
-                if (this.aBooleanArray2830[var10] && var10 != this.currentPlayerID) {
-                    this.drawBall(this.graphics, var10, this.aSynchronizedBoolArray2831[var10].get() ? 2.1666666666666665D : 0.0D);
+            for (int player = 0; player < this.playerCount; ++player) {
+                if (this.aBooleanArray2830[player] && player != this.currentPlayerID) {
+                    this.drawBall(this.graphics, player, this.aSynchronizedBoolArray2831[player].get() ? 2.1666666666666665D : 0.0D);
                 }
             }
 
@@ -194,38 +194,38 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 var14[var41] = this.playerY[var41];
             }
 
-            int var43;
+            int player;
             int var44;
             for (int var42 = 0; var42 < this.anInt2839; ++var42) {
                 var24 = 0;
 
-                for (var43 = 0; var43 < this.playerCount; ++var43) {
-                    if (this.aBooleanArray2830[var43] && !this.aSynchronizedBoolArray2831[var43].get()) {
+                for (player = 0; player < this.playerCount; ++player) {
+                    if (this.aBooleanArray2830[player] && !this.aSynchronizedBoolArray2831[player].get()) {
                         for (var44 = 0; var44 < 10; ++var44) {
-                            this.playerX[var43] += this.aDoubleArray2828[var43] * 0.1D;
-                            this.playerY[var43] += this.aDoubleArray2829[var43] * 0.1D;
-                            if (this.playerX[var43] < 6.6D) {
-                                this.playerX[var43] = 6.6D;
+                            this.playerX[player] += this.aDoubleArray2828[player] * 0.1D;
+                            this.playerY[player] += this.aDoubleArray2829[player] * 0.1D;
+                            if (this.playerX[player] < 6.6D) {
+                                this.playerX[player] = 6.6D;
                             }
 
-                            if (this.playerX[var43] >= 727.9D) {
-                                this.playerX[var43] = 727.9D;
+                            if (this.playerX[player] >= 727.9D) {
+                                this.playerX[player] = 727.9D;
                             }
 
-                            if (this.playerY[var43] < 6.6D) {
-                                this.playerY[var43] = 6.6D;
+                            if (this.playerY[player] < 6.6D) {
+                                this.playerY[player] = 6.6D;
                             }
 
-                            if (this.playerY[var43] >= 367.9D) {
-                                this.playerY[var43] = 367.9D;
+                            if (this.playerY[player] >= 367.9D) {
+                                this.playerY[player] = 367.9D;
                             }
 
                             int var45;
-                            if (this.anInt2811 == 1 && !var15[var43] && !var16[var43]) {
+                            if (this.anInt2811 == 1 && !var15[player] && !var16[player]) {
                                 for (var45 = 0; var45 < this.playerCount; ++var45) {
-                                    if (var43 != var45 && this.aBooleanArray2830[var45] && !this.aSynchronizedBoolArray2831[var45].get() && !var15[var45] && !var16[var45] && this.method147(var43, var45)) {
-                                        this.aDoubleArray2828[var43] *= 0.75D;
-                                        this.aDoubleArray2829[var43] *= 0.75D;
+                                    if (player != var45 && this.aBooleanArray2830[var45] && !this.aSynchronizedBoolArray2831[var45].get() && !var15[var45] && !var16[var45] && this.method147(player, var45)) {
+                                        this.aDoubleArray2828[player] *= 0.75D;
+                                        this.aDoubleArray2829[player] *= 0.75D;
                                         this.aDoubleArray2828[var45] *= 0.75D;
                                         this.aDoubleArray2829[var45] *= 0.75D;
                                         var24 = 0;
@@ -233,8 +233,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                                 }
                             }
 
-                            var35 = (int) (this.playerX[var43] + 0.5D);
-                            var34 = (int) (this.playerY[var43] + 0.5D);
+                            var35 = (int) (this.playerX[player] + 0.5D);
+                            var34 = (int) (this.playerY[player] + 0.5D);
                             var33 = super.isSolidArrayIThink[var35][var34];
                             var32 = super.isSolidArrayIThink[var35][var34 - 6];
                             var31 = super.isSolidArrayIThink[var35 + anInt2799][var34 - anInt2799];
@@ -247,8 +247,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             if (var33 != 12 && var33 != 13) {
                                 var21 = var33 == 14 || var33 == 15;
                             } else {
-                                this.aDoubleArray2828[var43] *= 0.97D;
-                                this.aDoubleArray2829[var43] *= 0.97D;
+                                this.aDoubleArray2828[player] *= 0.97D;
+                                this.aDoubleArray2829[player] *= 0.97D;
                                 var21 = true;
                             }
 
@@ -257,28 +257,28 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             for (int var46 = 32; var46 <= 38; var46 += 2) {
                                 if (var32 == var46 || var31 == var46 || var30 == var46 || var29 == var46 || var28 == var46 || var27 == var46 || var26 == var46 || var25 == var46) {
                                     ++var45;
-                                    if (!var17[var43]) {
-                                        this.method154((var46 - 32) / 2, var43, var35, var34);
-                                        var17[var43] = true;
+                                    if (!var17[player]) {
+                                        this.method154((var46 - 32) / 2, player, var35, var34);
+                                        var17[player] = true;
                                     }
                                 }
                             }
 
                             if (var45 == 0) {
-                                var17[var43] = false;
+                                var17[player] = false;
                             }
 
                             if (var33 == 28 || var33 == 30) {
-                                this.method155(var33 == 30, var43, var35, var34, var3, var4);
+                                this.method155(var33 == 30, player, var35, var34, var3, var4);
                             }
 
-                            this.method152(var43, var32, var31, var30, var29, var28, var27, var26, var25, var35, var34, var3, var4);
+                            this.method152(player, var32, var31, var30, var29, var28, var27, var26, var25, var35, var34, var3, var4);
                         }
 
-                        boolean var47 = this.method148(var43, var33);
+                        boolean var47 = this.method148(player, var33);
                         boolean var48 = false;
-                        if (this.aShortArrayArrayArray2825 != null && !var21 && !var15[var43] && !var16[var43]) {
-                            var48 = this.method149(var43, var35, var34);
+                        if (this.aShortArrayArrayArray2825 != null && !var21 && !var15[player] && !var16[player]) {
+                            var48 = this.method149(player, var35, var34);
                         }
 
                         var20 = false;
@@ -290,86 +290,86 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             if (var32 == 25) {
                                 ++var51;
                             } else {
-                                this.aDoubleArray2829[var43] += var49 * 0.03D;
+                                this.aDoubleArray2829[player] += var49 * 0.03D;
                             }
 
                             if (var31 == 25) {
                                 ++var51;
                             } else {
-                                this.aDoubleArray2829[var43] += var49 * 0.03D * aDouble2798;
-                                this.aDoubleArray2828[var43] -= var49 * 0.03D * aDouble2798;
+                                this.aDoubleArray2829[player] += var49 * 0.03D * aDouble2798;
+                                this.aDoubleArray2828[player] -= var49 * 0.03D * aDouble2798;
                             }
 
                             if (var30 == 25) {
                                 ++var51;
                             } else {
-                                this.aDoubleArray2828[var43] -= var49 * 0.03D;
+                                this.aDoubleArray2828[player] -= var49 * 0.03D;
                             }
 
                             if (var29 == 25) {
                                 ++var51;
                             } else {
-                                this.aDoubleArray2829[var43] -= var49 * 0.03D * aDouble2798;
-                                this.aDoubleArray2828[var43] -= var49 * 0.03D * aDouble2798;
+                                this.aDoubleArray2829[player] -= var49 * 0.03D * aDouble2798;
+                                this.aDoubleArray2828[player] -= var49 * 0.03D * aDouble2798;
                             }
 
                             if (var28 == 25) {
                                 ++var51;
                             } else {
-                                this.aDoubleArray2829[var43] -= var49 * 0.03D;
+                                this.aDoubleArray2829[player] -= var49 * 0.03D;
                             }
 
                             if (var27 == 25) {
                                 ++var51;
                             } else {
-                                this.aDoubleArray2829[var43] -= var49 * 0.03D * aDouble2798;
-                                this.aDoubleArray2828[var43] += var49 * 0.03D * aDouble2798;
+                                this.aDoubleArray2829[player] -= var49 * 0.03D * aDouble2798;
+                                this.aDoubleArray2828[player] += var49 * 0.03D * aDouble2798;
                             }
 
                             if (var26 == 25) {
                                 ++var51;
                             } else {
-                                this.aDoubleArray2828[var43] += var49 * 0.03D;
+                                this.aDoubleArray2828[player] += var49 * 0.03D;
                             }
 
                             if (var25 == 25) {
                                 ++var51;
                             } else {
-                                this.aDoubleArray2829[var43] += var49 * 0.03D * aDouble2798;
-                                this.aDoubleArray2828[var43] += var49 * 0.03D * aDouble2798;
+                                this.aDoubleArray2829[player] += var49 * 0.03D * aDouble2798;
+                                this.aDoubleArray2828[player] += var49 * 0.03D * aDouble2798;
                             }
 
                             if (var51 >= 7) {
                                 var20 = false;
-                                var15[var43] = true;
-                                this.aDoubleArray2828[var43] = this.aDoubleArray2829[var43] = 0.0D;
+                                var15[player] = true;
+                                this.aDoubleArray2828[player] = this.aDoubleArray2829[player] = 0.0D;
                             }
                         }
 
                         if (var20) {
-                            ++var18[var43];
-                            if (var18[var43] > 500) {
+                            ++var18[player];
+                            if (var18[player] > 500) {
                                 var20 = false;
                             }
                         } else {
-                            var18[var43] = 0;
+                            var18[player] = 0;
                         }
 
-                        if (!var47 && !var48 && !var20 && !var15[var43] && !var16[var43] && !var21) {
-                            var11[var43] = this.playerX[var43];
-                            var12[var43] = this.playerY[var43];
+                        if (!var47 && !var48 && !var20 && !var15[player] && !var16[player] && !var21) {
+                            var11[player] = this.playerX[player];
+                            var12[player] = this.playerY[player];
                         }
 
-                        var36 = Math.sqrt(this.aDoubleArray2828[var43] * this.aDoubleArray2828[var43] + this.aDoubleArray2829[var43] * this.aDoubleArray2829[var43]);
+                        var36 = Math.sqrt(this.aDoubleArray2828[player] * this.aDoubleArray2828[player] + this.aDoubleArray2829[player] * this.aDoubleArray2829[player]);
                         if (var36 > 0.0D) {
                             double var52 = this.method150(var33, var36);
-                            this.aDoubleArray2828[var43] *= var52;
-                            this.aDoubleArray2829[var43] *= var52;
+                            this.aDoubleArray2828[player] *= var52;
+                            this.aDoubleArray2829[player] *= var52;
                             var36 *= var52;
                             if (var36 > 7.0D) {
                                 var49 = 7.0D / var36;
-                                this.aDoubleArray2828[var43] *= var49;
-                                this.aDoubleArray2829[var43] *= var49;
+                                this.aDoubleArray2828[player] *= var49;
+                                this.aDoubleArray2829[player] *= var49;
                                 var36 *= var49;
                             }
                         }
@@ -384,54 +384,54 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                         }
 
                         if (var47 && var36 < 0.22499999999999998D) {
-                            ++var7[var43];
-                            if (var7[var43] >= 250) {
+                            ++var7[player];
+                            if (var7[player] >= 250) {
                                 var47 = false;
                             }
                         } else {
-                            var7[var43] = 0;
+                            var7[player] = 0;
                         }
 
                         if (var48 && var36 < 0.22499999999999998D) {
-                            ++var6[var43];
-                            if (var6[var43] >= 150) {
+                            ++var6[player];
+                            if (var6[player] >= 150) {
                                 var48 = false;
                             }
                         } else {
-                            var6[var43] = 0;
+                            var6[player] = 0;
                         }
 
-                        if (var36 < 0.075D && !var47 && !var48 && !var20 && !var15[var43] && !var16[var43]) {
-                            this.aDoubleArray2828[var43] = this.aDoubleArray2829[var43] = 0.0D;
+                        if (var36 < 0.075D && !var47 && !var48 && !var20 && !var15[player] && !var16[player]) {
+                            this.aDoubleArray2828[player] = this.aDoubleArray2829[player] = 0.0D;
                             if (var33 != 12 && var33 != 14 && var33 != 13 && var33 != 15) {
                                 ++var24;
                             } else {
-                                var16[var43] = true;
+                                var16[player] = true;
                             }
                         }
 
-                        if (var15[var43] || var16[var43]) {
-                            var10[var43] += 0.1D;
-                            if (var15[var43] && var10[var43] > 2.1666666666666665D || var16[var43] && var10[var43] > 6.0D) {
+                        if (var15[player] || var16[player]) {
+                            var10[player] += 0.1D;
+                            if (var15[player] && var10[player] > 2.1666666666666665D || var16[player] && var10[player] > 6.0D) {
                                 if (var33 == 25) {
-                                    this.aSynchronizedBoolArray2831[var43].set(true);
+                                    this.aSynchronizedBoolArray2831[player].set(true);
                                     if (this.aBoolean2832 && this.playerCount > 1) {
                                         super.gameContainer.gamePanel.hideSkipButton();
                                     }
                                 } else {
                                     if (var33 == 12 || var33 == 14) {
-                                        this.playerX[var43] = this.anInt2810 == 0 ? var8[var43] : var11[var43];
-                                        this.playerY[var43] = this.anInt2810 == 0 ? var9[var43] : var12[var43];
+                                        this.playerX[player] = this.anInt2810 == 0 ? var8[player] : var11[player];
+                                        this.playerY[player] = this.anInt2810 == 0 ? var9[player] : var12[player];
                                     }
 
                                     if (var33 == 13 || var33 == 15) {
-                                        this.method145(var43, false);
+                                        this.method145(player, false);
                                     }
 
-                                    var10[var43] = 0.0D;
+                                    var10[player] = 0.0D;
                                 }
 
-                                var15[var43] = var16[var43] = false;
+                                var15[player] = var16[player] = false;
                                 ++var24;
                             }
                         }
@@ -446,10 +446,10 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 }
             }
 
-            for (var43 = 0; var43 < this.playerCount; ++var43) {
-                if (this.aBooleanArray2830[var43]) {
-                    int var54 = (int) (var13[var43] - 6.5D + 0.5D);
-                    int var55 = (int) (var14[var43] - 6.5D + 0.5D);
+            for (player = 0; player < this.playerCount; ++player) {
+                if (this.aBooleanArray2830[player]) {
+                    int var54 = (int) (var13[player] - 6.5D + 0.5D);
+                    int var55 = (int) (var14[player] - 6.5D + 0.5D);
                     int var56 = var54 + 13;
                     int var57 = var55 + 13;
                     var3.drawImage(var2, var54, var55, var56, var57, var54, var55, var56, var57, this);
@@ -461,20 +461,20 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                     }
 
                     this.drawBall(var3, this.currentPlayerID, var10[this.currentPlayerID]);
-                    if (this.playerX[var43] < var13[var43]) {
-                        var54 = (int) (this.playerX[var43] - 6.5D + 0.5D);
+                    if (this.playerX[player] < var13[player]) {
+                        var54 = (int) (this.playerX[player] - 6.5D + 0.5D);
                     }
 
-                    if (this.playerX[var43] > var13[var43]) {
-                        var56 = (int) (this.playerX[var43] - 6.5D + 0.5D) + 13;
+                    if (this.playerX[player] > var13[player]) {
+                        var56 = (int) (this.playerX[player] - 6.5D + 0.5D) + 13;
                     }
 
-                    if (this.playerY[var43] < var14[var43]) {
-                        var55 = (int) (this.playerY[var43] - 6.5D + 0.5D);
+                    if (this.playerY[player] < var14[player]) {
+                        var55 = (int) (this.playerY[player] - 6.5D + 0.5D);
                     }
 
-                    if (this.playerY[var43] > var14[var43]) {
-                        var57 = (int) (this.playerY[var43] - 6.5D + 0.5D) + 13;
+                    if (this.playerY[player] > var14[player]) {
+                        var57 = (int) (this.playerY[player] - 6.5D + 0.5D) + 13;
                     }
 
                     var4.drawImage(var1, var54, var55, var56, var57, var54, var55, var56, var57, this);
