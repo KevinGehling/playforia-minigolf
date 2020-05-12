@@ -43,8 +43,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private short[][][] aShortArrayArrayArray2825;
     private double[] playerX;
     private double[] playerY;
-    private double[] playerBallVelocityX;
-    private double[] playerBallVelocityY;
+    private double[] ballVelocityX;
+    private double[] ballVelocityY;
     private boolean[] aBooleanArray2830;
     private SynchronizedBool[] aSynchronizedBoolArray2831;
     private boolean aBoolean2832;
@@ -78,7 +78,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
         super.update(this.graphics);
         if (this.gameState == 1 && this.mouseX > -1 && this.mouseY > -1) {
-            double[] var2 = this.caculateStrokeEnding(this.currentPlayerID, this.mouseX, this.mouseY);
+            double[] var2 = this.calculateVelocity(this.currentPlayerID, this.mouseX, this.mouseY);
             // cast to (int) with +0.5D <=> round to int
             int var3 = (int) (this.playerX[this.currentPlayerID] + 0.5D);
             int var4 = (int) (this.playerY[this.currentPlayerID] + 0.5D);
@@ -204,8 +204,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 for (player = 0; player < this.playerCount; ++player) {
                     if (this.aBooleanArray2830[player] && !this.aSynchronizedBoolArray2831[player].get()) {
                         for (var44 = 0; var44 < 10; ++var44) {
-                            this.playerX[player] += this.playerBallVelocityX[player] * 0.1D;
-                            this.playerY[player] += this.playerBallVelocityY[player] * 0.1D;
+                            this.playerX[player] += this.ballVelocityX[player] * 0.1D;
+                            this.playerY[player] += this.ballVelocityY[player] * 0.1D;
                             if (this.playerX[player] < 6.6D) {
                                 this.playerX[player] = 6.6D;
                             }
@@ -226,10 +226,10 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             if (this.anInt2811 == 1 && !var15[player] && !var16[player]) {
                                 for (var45 = 0; var45 < this.playerCount; ++var45) {
                                     if (player != var45 && this.aBooleanArray2830[var45] && !this.aSynchronizedBoolArray2831[var45].get() && !var15[var45] && !var16[var45] && this.method147(player, var45)) {
-                                        this.playerBallVelocityX[player] *= 0.75D;
-                                        this.playerBallVelocityY[player] *= 0.75D;
-                                        this.playerBallVelocityX[var45] *= 0.75D;
-                                        this.playerBallVelocityY[var45] *= 0.75D;
+                                        this.ballVelocityX[player] *= 0.75D;
+                                        this.ballVelocityY[player] *= 0.75D;
+                                        this.ballVelocityX[var45] *= 0.75D;
+                                        this.ballVelocityY[var45] *= 0.75D;
                                         var24 = 0;
                                     }
                                 }
@@ -249,8 +249,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             if (var33 != 12 && var33 != 13) {
                                 var21 = var33 == 14 || var33 == 15;
                             } else {
-                                this.playerBallVelocityX[player] *= 0.97D;
-                                this.playerBallVelocityY[player] *= 0.97D;
+                                this.ballVelocityX[player] *= 0.97D;
+                                this.ballVelocityY[player] *= 0.97D;
                                 var21 = true;
                             }
 
@@ -292,59 +292,59 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             if (var32 == 25) {
                                 ++var51;
                             } else {
-                                this.playerBallVelocityY[player] += var49 * 0.03D;
+                                this.ballVelocityY[player] += var49 * 0.03D;
                             }
 
                             if (var31 == 25) {
                                 ++var51;
                             } else {
-                                this.playerBallVelocityY[player] += var49 * 0.03D * aDouble2798;
-                                this.playerBallVelocityX[player] -= var49 * 0.03D * aDouble2798;
+                                this.ballVelocityY[player] += var49 * 0.03D * aDouble2798;
+                                this.ballVelocityX[player] -= var49 * 0.03D * aDouble2798;
                             }
 
                             if (var30 == 25) {
                                 ++var51;
                             } else {
-                                this.playerBallVelocityX[player] -= var49 * 0.03D;
+                                this.ballVelocityX[player] -= var49 * 0.03D;
                             }
 
                             if (var29 == 25) {
                                 ++var51;
                             } else {
-                                this.playerBallVelocityY[player] -= var49 * 0.03D * aDouble2798;
-                                this.playerBallVelocityX[player] -= var49 * 0.03D * aDouble2798;
+                                this.ballVelocityY[player] -= var49 * 0.03D * aDouble2798;
+                                this.ballVelocityX[player] -= var49 * 0.03D * aDouble2798;
                             }
 
                             if (var28 == 25) {
                                 ++var51;
                             } else {
-                                this.playerBallVelocityY[player] -= var49 * 0.03D;
+                                this.ballVelocityY[player] -= var49 * 0.03D;
                             }
 
                             if (var27 == 25) {
                                 ++var51;
                             } else {
-                                this.playerBallVelocityY[player] -= var49 * 0.03D * aDouble2798;
-                                this.playerBallVelocityX[player] += var49 * 0.03D * aDouble2798;
+                                this.ballVelocityY[player] -= var49 * 0.03D * aDouble2798;
+                                this.ballVelocityX[player] += var49 * 0.03D * aDouble2798;
                             }
 
                             if (var26 == 25) {
                                 ++var51;
                             } else {
-                                this.playerBallVelocityX[player] += var49 * 0.03D;
+                                this.ballVelocityX[player] += var49 * 0.03D;
                             }
 
                             if (var25 == 25) {
                                 ++var51;
                             } else {
-                                this.playerBallVelocityY[player] += var49 * 0.03D * aDouble2798;
-                                this.playerBallVelocityX[player] += var49 * 0.03D * aDouble2798;
+                                this.ballVelocityY[player] += var49 * 0.03D * aDouble2798;
+                                this.ballVelocityX[player] += var49 * 0.03D * aDouble2798;
                             }
 
                             if (var51 >= 7) {
                                 var20 = false;
                                 var15[player] = true;
-                                this.playerBallVelocityX[player] = this.playerBallVelocityY[player] = 0.0D;
+                                this.ballVelocityX[player] = this.ballVelocityY[player] = 0.0D;
                             }
                         }
 
@@ -362,16 +362,16 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                             var12[player] = this.playerY[player];
                         }
 
-                        var36 = Math.sqrt(this.playerBallVelocityX[player] * this.playerBallVelocityX[player] + this.playerBallVelocityY[player] * this.playerBallVelocityY[player]);
+                        var36 = Math.sqrt(this.ballVelocityX[player] * this.ballVelocityX[player] + this.ballVelocityY[player] * this.ballVelocityY[player]);
                         if (var36 > 0.0D) {
                             double var52 = this.method150(var33, var36);
-                            this.playerBallVelocityX[player] *= var52;
-                            this.playerBallVelocityY[player] *= var52;
+                            this.ballVelocityX[player] *= var52;
+                            this.ballVelocityY[player] *= var52;
                             var36 *= var52;
                             if (var36 > 7.0D) {
                                 var49 = 7.0D / var36;
-                                this.playerBallVelocityX[player] *= var49;
-                                this.playerBallVelocityY[player] *= var49;
+                                this.ballVelocityX[player] *= var49;
+                                this.ballVelocityY[player] *= var49;
                                 var36 *= var49;
                             }
                         }
@@ -404,7 +404,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                         }
 
                         if (var36 < 0.075D && !var47 && !var48 && !var20 && !var15[player] && !var16[player]) {
-                            this.playerBallVelocityX[player] = this.playerBallVelocityY[player] = 0.0D;
+                            this.ballVelocityX[player] = this.ballVelocityY[player] = 0.0D;
                             if (var33 != 12 && var33 != 14 && var33 != 13 && var33 != 15) {
                                 ++var24;
                             } else {
@@ -548,7 +548,6 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                     this.setCursor(cursorDefault);
                     if (super.gameContainer.gamePanel.canStroke(true)) {
                         super.gameContainer.gamePanel.setBeginStroke(this.currentPlayerID, x, y, this.mouseInputMode);
-                        //this.doHackedStroke(this.currentPlayerID, true, x, y, this.keyCountMod4);
                         this.doStroke(this.currentPlayerID, true, x, y, this.mouseInputMode);
                     }
                 }
@@ -586,8 +585,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         this.anInt2811 = var3;
         this.playerX = new double[playerCount];
         this.playerY = new double[playerCount];
-        this.playerBallVelocityX = new double[playerCount];
-        this.playerBallVelocityY = new double[playerCount];
+        this.ballVelocityX = new double[playerCount];
+        this.ballVelocityY = new double[playerCount];
         this.aSynchronizedBoolArray2831 = new SynchronizedBool[playerCount];
 
         for (int var4 = 0; var4 < playerCount; ++var4) {
@@ -606,7 +605,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         this.repaint();
     }
 
-    protected boolean parseMap(String commandLines, String var2, int var3) {
+    protected boolean parseMap(String commandLines, String var2, int gameId) {
         boolean var4 = super.parseMapCommands(commandLines);
 
         this.aString2835 = null;
@@ -625,7 +624,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 currentCommand = currentCommand.substring(var10 + 1);
                 int var11 = currentCommand.indexOf('=');
                 if (var11 > -1) {
-                    var3 = Integer.parseInt(currentCommand.substring(0, var11));
+                    gameId = Integer.parseInt(currentCommand.substring(0, var11));
                     this.aString2835 = currentCommand.substring(var11 + 1);
 
                 }
@@ -697,7 +696,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         if (x == 0) {
             this.startPointX = this.startPointY = -1.0D;
         } else {
-            var19 = (double[]) var40.elementAt(var3 % x);
+            var19 = (double[]) var40.elementAt(gameId % x);
             this.startPointX = var19[0];
             this.startPointY = var19[1];
         }
@@ -764,7 +763,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             this.aBooleanArray2830[var39] = var2.charAt(var39) == 't';
         }
 
-        this.aSeed_2836 = new Seed((long) var3);
+        this.aSeed_2836 = new Seed((long) gameId);
         this.repaint();
         return var4;
     }
@@ -862,40 +861,40 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
 
     private void doStroke(int playerId, boolean isLocalPlayer, int mouseX, int mouseY, int mod) {
         this.anInt2816 = super.gameContainer.gamePanel.isValidPlayerID(playerId) ? playerId : -1;
-        double[] targetPosition = this.caculateStrokeEnding(playerId, mouseX, mouseY);
-        this.playerBallVelocityX[playerId] = targetPosition[0];
-        this.playerBallVelocityY[playerId] = targetPosition[1];
-        System.out.println("start velocityX: " + this.playerBallVelocityX[playerId]);
-        System.out.println("start velocityY: " + this.playerBallVelocityY[playerId]);
+        double[] velocity = this.calculateVelocity(playerId, mouseX, mouseY);
+        this.ballVelocityX[playerId] = velocity[0];
+        this.ballVelocityY[playerId] = velocity[1];
+        System.out.println("start velocityX: " + this.ballVelocityX[playerId]);
+        System.out.println("start velocityY: " + this.ballVelocityY[playerId]);
         if (mod == 1) {
-            this.playerBallVelocityX[playerId] = -this.playerBallVelocityX[playerId];
-            this.playerBallVelocityY[playerId] = -this.playerBallVelocityY[playerId];
+            this.ballVelocityX[playerId] = -this.ballVelocityX[playerId];
+            this.ballVelocityY[playerId] = -this.ballVelocityY[playerId];
         }
 
         double var7;
         if (mod == 2) {
-            var7 = this.playerBallVelocityX[playerId];
-            this.playerBallVelocityX[playerId] = this.playerBallVelocityY[playerId];
-            this.playerBallVelocityY[playerId] = -var7;
+            var7 = this.ballVelocityX[playerId];
+            this.ballVelocityX[playerId] = this.ballVelocityY[playerId];
+            this.ballVelocityY[playerId] = -var7;
         }
 
         if (mod == 3) {
-            var7 = this.playerBallVelocityX[playerId];
-            this.playerBallVelocityX[playerId] = -this.playerBallVelocityY[playerId];
-            this.playerBallVelocityY[playerId] = var7;
+            var7 = this.ballVelocityX[playerId];
+            this.ballVelocityX[playerId] = -this.ballVelocityY[playerId];
+            this.ballVelocityY[playerId] = var7;
         }
 
-        var7 = Math.sqrt(this.playerBallVelocityX[playerId] * this.playerBallVelocityX[playerId] + this.playerBallVelocityY[playerId] * this.playerBallVelocityY[playerId]);
+        var7 = Math.sqrt(this.ballVelocityX[playerId] * this.ballVelocityX[playerId] + this.ballVelocityY[playerId] * this.ballVelocityY[playerId]);
         double var9 = var7 / 6.5D;
         var9 *= var9;
-        this.playerBallVelocityX[playerId] += var9 * ((double) (this.aSeed_2836.next() % '\uc351') / 100000.0D - 0.25D);
-        this.playerBallVelocityY[playerId] += var9 * ((double) (this.aSeed_2836.next() % '\uc351') / 100000.0D - 0.25D);
+        this.ballVelocityX[playerId] += var9 * ((double) (this.aSeed_2836.next() % '\uc351') / 100000.0D - 0.25D);
+        this.ballVelocityY[playerId] += var9 * ((double) (this.aSeed_2836.next() % '\uc351') / 100000.0D - 0.25D);
         this.aBoolean2832 = isLocalPlayer;
         this.gameState = 2;
         this.aBoolean2843 = false;
 
-        System.out.println("aftercalc velocityX: " + this.playerBallVelocityX[playerId]);
-        System.out.println("aftercalc velocityY: " + this.playerBallVelocityY[playerId]);
+        System.out.println("aftercalc velocityX: " + this.ballVelocityX[playerId]);
+        System.out.println("aftercalc velocityY: " + this.ballVelocityY[playerId]);
         this.aThread2842 = new Thread(this);
         this.aThread2842.start();
     }
@@ -919,7 +918,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     }
 
     // calculate stroke ending for mouseX and mouseY
-    private double[] caculateStrokeEnding(int playerId, int mouseX, int mouseY) {
+    private double[] calculateVelocity(int playerId, int mouseX, int mouseY) {
         double subX = this.playerX[playerId] - (double) mouseX;
         double subY = this.playerY[playerId] - (double) mouseY;
         double sqrtXY = Math.sqrt(subX * subX + subY * subY);
@@ -944,17 +943,17 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         if (var7 != 0.0D && var7 <= 13.0D) {
             double var9 = var3 / var7;
             double var11 = var5 / var7;
-            double var13 = this.playerBallVelocityX[var1] * var9 + this.playerBallVelocityY[var1] * var11;
-            double var15 = this.playerBallVelocityX[var2] * var9 + this.playerBallVelocityY[var2] * var11;
+            double var13 = this.ballVelocityX[var1] * var9 + this.ballVelocityY[var1] * var11;
+            double var15 = this.ballVelocityX[var2] * var9 + this.ballVelocityY[var2] * var11;
             if (var13 - var15 <= 0.0D) {
                 return false;
             } else {
-                double var17 = -this.playerBallVelocityX[var1] * var11 + this.playerBallVelocityY[var1] * var9;
-                double var19 = -this.playerBallVelocityX[var2] * var11 + this.playerBallVelocityY[var2] * var9;
-                this.playerBallVelocityX[var1] = var15 * var9 - var17 * var11;
-                this.playerBallVelocityY[var1] = var15 * var11 + var17 * var9;
-                this.playerBallVelocityX[var2] = var13 * var9 - var19 * var11;
-                this.playerBallVelocityY[var2] = var13 * var11 + var19 * var9;
+                double var17 = -this.ballVelocityX[var1] * var11 + this.ballVelocityY[var1] * var9;
+                double var19 = -this.ballVelocityX[var2] * var11 + this.ballVelocityY[var2] * var9;
+                this.ballVelocityX[var1] = var15 * var9 - var17 * var11;
+                this.ballVelocityY[var1] = var15 * var11 + var17 * var9;
+                this.ballVelocityX[var2] = var13 * var9 - var19 * var11;
+                this.ballVelocityY[var2] = var13 * var11 + var19 * var9;
                 return true;
             }
         } else {
@@ -965,39 +964,39 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
     private boolean method148(int var1, int var2) {
         if (var2 >= 4 && var2 <= 11) {
             if (var2 == 4) {
-                this.playerBallVelocityY[var1] -= 0.025D;
+                this.ballVelocityY[var1] -= 0.025D;
             }
 
             if (var2 == 5) {
-                this.playerBallVelocityY[var1] -= 0.025D * aDouble2798;
-                this.playerBallVelocityX[var1] += 0.025D * aDouble2798;
+                this.ballVelocityY[var1] -= 0.025D * aDouble2798;
+                this.ballVelocityX[var1] += 0.025D * aDouble2798;
             }
 
             if (var2 == 6) {
-                this.playerBallVelocityX[var1] += 0.025D;
+                this.ballVelocityX[var1] += 0.025D;
             }
 
             if (var2 == 7) {
-                this.playerBallVelocityY[var1] += 0.025D * aDouble2798;
-                this.playerBallVelocityX[var1] += 0.025D * aDouble2798;
+                this.ballVelocityY[var1] += 0.025D * aDouble2798;
+                this.ballVelocityX[var1] += 0.025D * aDouble2798;
             }
 
             if (var2 == 8) {
-                this.playerBallVelocityY[var1] += 0.025D;
+                this.ballVelocityY[var1] += 0.025D;
             }
 
             if (var2 == 9) {
-                this.playerBallVelocityY[var1] += 0.025D * aDouble2798;
-                this.playerBallVelocityX[var1] -= 0.025D * aDouble2798;
+                this.ballVelocityY[var1] += 0.025D * aDouble2798;
+                this.ballVelocityX[var1] -= 0.025D * aDouble2798;
             }
 
             if (var2 == 10) {
-                this.playerBallVelocityX[var1] -= 0.025D;
+                this.ballVelocityX[var1] -= 0.025D;
             }
 
             if (var2 == 11) {
-                this.playerBallVelocityY[var1] -= 0.025D * aDouble2798;
-                this.playerBallVelocityX[var1] -= 0.025D * aDouble2798;
+                this.ballVelocityY[var1] -= 0.025D * aDouble2798;
+                this.ballVelocityX[var1] -= 0.025D * aDouble2798;
             }
 
             return true;
@@ -1018,8 +1017,8 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 this.aDouble2820 -= 1.0E-4D;
             }
 
-            this.playerBallVelocityX[var1] += this.aDouble2820 * (double) var6 * 5.0E-4D;
-            this.playerBallVelocityY[var1] += this.aDouble2820 * (double) var7 * 5.0E-4D;
+            this.ballVelocityX[var1] += this.aDouble2820 * (double) var6 * 5.0E-4D;
+            this.ballVelocityY[var1] += this.aDouble2820 * (double) var7 * 5.0E-4D;
             return true;
         }
     }
@@ -1147,55 +1146,55 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
         double var22;
         if (!var14 && !var16 && !var18 && !var20) {
             double var24;
-            if (var15 && (this.playerBallVelocityX[var1] > 0.0D && this.playerBallVelocityY[var1] < 0.0D || this.playerBallVelocityX[var1] < 0.0D && this.playerBallVelocityY[var1] < 0.0D && -this.playerBallVelocityY[var1] > -this.playerBallVelocityX[var1] || this.playerBallVelocityX[var1] > 0.0D && this.playerBallVelocityY[var1] > 0.0D && this.playerBallVelocityX[var1] > this.playerBallVelocityY[var1])) {
+            if (var15 && (this.ballVelocityX[var1] > 0.0D && this.ballVelocityY[var1] < 0.0D || this.ballVelocityX[var1] < 0.0D && this.ballVelocityY[var1] < 0.0D && -this.ballVelocityY[var1] > -this.ballVelocityX[var1] || this.ballVelocityX[var1] > 0.0D && this.ballVelocityY[var1] > 0.0D && this.ballVelocityX[var1] > this.ballVelocityY[var1])) {
                 var22 = this.method153(var3, var1, var10 + anInt2799, var11 - anInt2799, var12, var13, 1, -1);
-                var24 = this.playerBallVelocityX[var1];
-                this.playerBallVelocityX[var1] = this.playerBallVelocityY[var1] * var22;
-                this.playerBallVelocityY[var1] = var24 * var22;
+                var24 = this.ballVelocityX[var1];
+                this.ballVelocityX[var1] = this.ballVelocityY[var1] * var22;
+                this.ballVelocityY[var1] = var24 * var22;
             }
 
-            if (var17 && (this.playerBallVelocityX[var1] > 0.0D && this.playerBallVelocityY[var1] > 0.0D || this.playerBallVelocityX[var1] > 0.0D && this.playerBallVelocityY[var1] < 0.0D && this.playerBallVelocityX[var1] > -this.playerBallVelocityY[var1] || this.playerBallVelocityX[var1] < 0.0D && this.playerBallVelocityY[var1] > 0.0D && this.playerBallVelocityY[var1] > -this.playerBallVelocityX[var1])) {
+            if (var17 && (this.ballVelocityX[var1] > 0.0D && this.ballVelocityY[var1] > 0.0D || this.ballVelocityX[var1] > 0.0D && this.ballVelocityY[var1] < 0.0D && this.ballVelocityX[var1] > -this.ballVelocityY[var1] || this.ballVelocityX[var1] < 0.0D && this.ballVelocityY[var1] > 0.0D && this.ballVelocityY[var1] > -this.ballVelocityX[var1])) {
                 var22 = this.method153(var5, var1, var10 + anInt2799, var11 + anInt2799, var12, var13, 1, 1);
-                var24 = this.playerBallVelocityX[var1];
-                this.playerBallVelocityX[var1] = -this.playerBallVelocityY[var1] * var22;
-                this.playerBallVelocityY[var1] = -var24 * var22;
+                var24 = this.ballVelocityX[var1];
+                this.ballVelocityX[var1] = -this.ballVelocityY[var1] * var22;
+                this.ballVelocityY[var1] = -var24 * var22;
             }
 
-            if (var19 && (this.playerBallVelocityX[var1] < 0.0D && this.playerBallVelocityY[var1] > 0.0D || this.playerBallVelocityX[var1] > 0.0D && this.playerBallVelocityY[var1] > 0.0D && this.playerBallVelocityY[var1] > this.playerBallVelocityX[var1] || this.playerBallVelocityX[var1] < 0.0D && this.playerBallVelocityY[var1] < 0.0D && -this.playerBallVelocityX[var1] > -this.playerBallVelocityY[var1])) {
+            if (var19 && (this.ballVelocityX[var1] < 0.0D && this.ballVelocityY[var1] > 0.0D || this.ballVelocityX[var1] > 0.0D && this.ballVelocityY[var1] > 0.0D && this.ballVelocityY[var1] > this.ballVelocityX[var1] || this.ballVelocityX[var1] < 0.0D && this.ballVelocityY[var1] < 0.0D && -this.ballVelocityX[var1] > -this.ballVelocityY[var1])) {
                 var22 = this.method153(var7, var1, var10 - anInt2799, var11 + anInt2799, var12, var13, -1, 1);
-                var24 = this.playerBallVelocityX[var1];
-                this.playerBallVelocityX[var1] = this.playerBallVelocityY[var1] * var22;
-                this.playerBallVelocityY[var1] = var24 * var22;
+                var24 = this.ballVelocityX[var1];
+                this.ballVelocityX[var1] = this.ballVelocityY[var1] * var22;
+                this.ballVelocityY[var1] = var24 * var22;
             }
 
-            if (var21 && (this.playerBallVelocityX[var1] < 0.0D && this.playerBallVelocityY[var1] < 0.0D || this.playerBallVelocityX[var1] < 0.0D && this.playerBallVelocityY[var1] > 0.0D && -this.playerBallVelocityX[var1] > this.playerBallVelocityY[var1] || this.playerBallVelocityX[var1] > 0.0D && this.playerBallVelocityY[var1] < 0.0D && -this.playerBallVelocityY[var1] > this.playerBallVelocityX[var1])) {
+            if (var21 && (this.ballVelocityX[var1] < 0.0D && this.ballVelocityY[var1] < 0.0D || this.ballVelocityX[var1] < 0.0D && this.ballVelocityY[var1] > 0.0D && -this.ballVelocityX[var1] > this.ballVelocityY[var1] || this.ballVelocityX[var1] > 0.0D && this.ballVelocityY[var1] < 0.0D && -this.ballVelocityY[var1] > this.ballVelocityX[var1])) {
                 var22 = this.method153(var9, var1, var10 - anInt2799, var11 - anInt2799, var12, var13, -1, -1);
-                var24 = this.playerBallVelocityX[var1];
-                this.playerBallVelocityX[var1] = -this.playerBallVelocityY[var1] * var22;
-                this.playerBallVelocityY[var1] = -var24 * var22;
+                var24 = this.ballVelocityX[var1];
+                this.ballVelocityX[var1] = -this.ballVelocityY[var1] * var22;
+                this.ballVelocityY[var1] = -var24 * var22;
             }
         } else {
-            if (var14 && this.playerBallVelocityY[var1] < 0.0D) {
+            if (var14 && this.ballVelocityY[var1] < 0.0D) {
                 var22 = this.method153(var2, var1, var10, var11 - 6, var12, var13, 0, -1);
-                this.playerBallVelocityX[var1] *= var22;
-                this.playerBallVelocityY[var1] *= -var22;
-            } else if (var18 && this.playerBallVelocityY[var1] > 0.0D) {
+                this.ballVelocityX[var1] *= var22;
+                this.ballVelocityY[var1] *= -var22;
+            } else if (var18 && this.ballVelocityY[var1] > 0.0D) {
                 var22 = this.method153(var6, var1, var10, var11 + 6, var12, var13, 0, 1);
-                this.playerBallVelocityX[var1] *= var22;
-                this.playerBallVelocityY[var1] *= -var22;
+                this.ballVelocityX[var1] *= var22;
+                this.ballVelocityY[var1] *= -var22;
             }
 
-            if (var16 && this.playerBallVelocityX[var1] > 0.0D) {
+            if (var16 && this.ballVelocityX[var1] > 0.0D) {
                 var22 = this.method153(var4, var1, var10 + 6, var11, var12, var13, 1, 0);
-                this.playerBallVelocityX[var1] *= -var22;
-                this.playerBallVelocityY[var1] *= var22;
+                this.ballVelocityX[var1] *= -var22;
+                this.ballVelocityY[var1] *= var22;
                 return;
             }
 
-            if (var20 && this.playerBallVelocityX[var1] < 0.0D) {
+            if (var20 && this.ballVelocityX[var1] < 0.0D) {
                 var22 = this.method153(var8, var1, var10 - 6, var11, var12, var13, -1, 0);
-                this.playerBallVelocityX[var1] *= -var22;
-                this.playerBallVelocityY[var1] *= var22;
+                this.ballVelocityX[var1] *= -var22;
+                this.ballVelocityY[var1] *= var22;
                 return;
             }
         }
@@ -1212,7 +1211,7 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
                 return 0.84D;
             } else {
                 this.aDouble2819 -= 0.01D;
-                double var9 = Math.sqrt(this.playerBallVelocityX[var2] * this.playerBallVelocityX[var2] + this.playerBallVelocityY[var2] * this.playerBallVelocityY[var2]);
+                double var9 = Math.sqrt(this.ballVelocityX[var2] * this.ballVelocityX[var2] + this.ballVelocityY[var2] * this.ballVelocityY[var2]);
                 return this.aDouble2819 * 6.5D / var9;
             }
         } else if (var1 != 20 && var1 != 21 && var1 != 22 && var1 != 23) {
@@ -1320,15 +1319,15 @@ public class GameCanvas extends GameBackgroundCanvas implements Runnable, MouseM
             double var17;
             do {
                 do {
-                    this.playerBallVelocityX[var2] = (double) (-65 + this.aSeed_2836.next() % 131) / 10.0D;
-                    this.playerBallVelocityY[var2] = (double) (-65 + this.aSeed_2836.next() % 131) / 10.0D;
-                    var17 = Math.sqrt(this.playerBallVelocityX[var2] * this.playerBallVelocityX[var2] + this.playerBallVelocityY[var2] * this.playerBallVelocityY[var2]);
+                    this.ballVelocityX[var2] = (double) (-65 + this.aSeed_2836.next() % 131) / 10.0D;
+                    this.ballVelocityY[var2] = (double) (-65 + this.aSeed_2836.next() % 131) / 10.0D;
+                    var17 = Math.sqrt(this.ballVelocityX[var2] * this.ballVelocityX[var2] + this.ballVelocityY[var2] * this.ballVelocityY[var2]);
                 } while (var17 < 5.2D);
             } while (var17 > 6.5D);
 
             if (!var1) {
-                this.playerBallVelocityX[var2] *= 0.8D;
-                this.playerBallVelocityY[var2] *= 0.8D;
+                this.ballVelocityX[var2] *= 0.8D;
+                this.ballVelocityY[var2] *= 0.8D;
             }
 
         }
