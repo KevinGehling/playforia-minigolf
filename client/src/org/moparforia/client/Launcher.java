@@ -73,7 +73,6 @@ public class Launcher extends JFrame {
             server = args[0];
         } else {
             //server = "localhost";
-            //server = "46.38.236.112";
             server = "127.0.0.1";
         }
 
